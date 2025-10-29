@@ -1,7 +1,11 @@
 import express from "express";
+import 'dotenv/config';
+import bookRouters from "./Routers/BookRouters.js";
+
 
 //initialize app
 const app = express();
+
 const PORT = 3000;
 
 //middleware
@@ -12,13 +16,10 @@ app.listen(PORT, () => {
 });
 
 try{
-    app.listen(PORT, () => {
-        console.log('Listening to port 3000...');
+    app.listen(process.env.PORT || 3000, () => {
+        console.log(`Listening to port ${process.env.PORT || 3000}...`);
     })
 }catch(e){
     console.log(e)
 }
-
-app.get('/johnpaul', async (req, res) => {
-    res.status(200).json({message: "JohnPaul"});
-});
+app.use('/book', bookRouters);
