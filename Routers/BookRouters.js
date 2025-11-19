@@ -3,6 +3,7 @@ import express from "express";
 
 const bookRoutes = express.Router();
 
+
 bookRoutes.get('/all', BookController.fetchBooks);
 bookRoutes.post('/new', BookController.createBook);
 bookRoutes.put('/edit/:bookId', BookController.editBook);

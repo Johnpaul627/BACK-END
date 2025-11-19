@@ -1,25 +1,35 @@
 import express from "express";
-import 'dotenv/config';
-import bookRouters from "./Routers/BookRouters.js";
+import "dotenv/config";
 import cors from "cors";
-import userRoutes from "./Routers/userroutes.js";
 
+// ROUTES
+import bookRouters from "./Routers/BookRouters.js";
+import userRoutes from "./Routers/userRoutes.js";
 
 const app = express();
-let corsoption ={
-origin: process.env.ORIGIN
-}
 
-const PORT = process.env.PORT || 3000;
+// CORS SETTINGS
+const corsOptions = {
+    origin: process.env.ORIGIN,
+    credentials: true
+};
+
+const PORT = process.env.PORT || 5000;
+
+// MIDDLEWARES
 app.use(express.json());
-app.use(cors(corsoption));
+app.use(cors(corsOptions));
 
-
-app.use('/books', bookRouters);
-// app.use('/students', studentRouters);
-app.use('/tbl_user', userRoutes);
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// TEST ROUTE
+app.get("/", (req, res) => {
+    res.send("API is running...");
 });
 
+// ROUTES
+app.use("/api/books", bookRouters);
+app.use("/api/users", userRoutes);
+
+// START SERVER
+app.listen(PORT, () => {
+    console.log(`🚀 Server is running on http://127.0.0.1:${PORT}`);
+});
